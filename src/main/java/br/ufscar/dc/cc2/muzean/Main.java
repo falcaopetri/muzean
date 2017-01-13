@@ -30,7 +30,7 @@ public class Main {
         //lexer.removeErrorListeners();
         //parser.removeErrorListeners();
 
-        parser.addErrorListener(mel);
+        //parser.addErrorListener(mel);
 
         ProgramaContext programa_context = parser.programa();
 

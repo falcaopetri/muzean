@@ -3,17 +3,17 @@ grammar Muzean;
 /*
 1. <programa> ::= <cabecalho> \n\n <compassos>
 */
-programa : cabecalho '\n\n' compassos;
+programa : cabecalho '\n' compassos;
 
 /*
 2. <cabecalho> ::= <definicoes> \n\n <flags>+
 */
-cabecalho : definicoes? flags;
+cabecalho : definicao* flags;
 
 /*
 3. <definicoes> ::= # ALIAS : <compassos>
 */
-definicoes : definicao+;
+//definicoes : definicao+;
 
 definicao : '#' ALIAS ':' compassos '\n';
 
@@ -22,7 +22,7 @@ definicao : '#' ALIAS ':' compassos '\n';
 */
 flags : flag flag_op*; 
 
-flag : 'tom : ' NOTA '\n' 'escala : ' ESCALA '\n' 'compasso : ' NUMERO '\n'; 
+flag : 'tom' ':' NOTA '\n' 'escala' ':' ESCALA '\n' 'compasso' ':' NUMERO '\n'; 
 
 /*
 5. <flag> ::=   ‘deslocamento’ : NUMERO  \n <flag> | ‘transposicao’ : NOTA \n <flag> | vazio
@@ -32,7 +32,7 @@ flag_op : 'deslocamento :' NUMERO '\n' | 'transposicao :' NOTA '\n';
 /*
 6. <compassos> ::= <estruturas> \n <compassos>*
 */
-compassos : estruturas '\n' compassos*;
+compassos : (estruturas '\n')+;
 
 /*
 7. <estruturas> ::= <loop> | <compasso> | ALIAS
@@ -42,7 +42,7 @@ estruturas : loop | compasso | ALIAS;
 /*
 8. <loop> ::= NUMERO { <compassos> }
 */
-loop : NUMERO '{' compassos '}';
+loop : NUMERO '{' compassos '}';  // colocar \n antes de compassos?
 
 /*
 9. <compasso> :: = [ <sons> ]
@@ -62,7 +62,7 @@ som : nota | acorde | '-' | '*';
 /*
 12. <nota> ::= NOTA OCTAVE
 */
-nota : NOTA OCTAVE;
+nota : NOTA NUMERO;
 
 /*
 13. <acorde> ::= ( <nota> )
@@ -74,18 +74,19 @@ acorde : '(' nota ')';
 /*
 14. ALIAS : [A-Z]+; 
 */
-ALIAS: ('A'..'Z')+;
+
 
 /*
 15. OCTAVE: ([0-9])
 */
-OCTAVE : ('0'..'9');
+
 
 /*
 16. NOTA: C | C# | D | D# | E | F | F# | G | G# | A | A# | B
 */
+ESCALA : 'm' | 'M';
 NOTA : 'C' | 'C#' | 'D' | 'D#' | 'E' | 'F' | 'F#' | 'G'| 'G#' | 'A' | 'A#' | 'B';
-
+ALIAS: ('A'..'Z')+;
 /*
 17. COMMENT: \/\/.*\\n
 */
@@ -99,10 +100,10 @@ NUMERO : '1'..'9' ('0'..'9')*;
 /*
 19. ESCALA: m | M
 */
-ESCALA : 'm' | 'M';
+
 
 /*
     Foi criada uma regra do lexer para identificar espaços em branco de acordo
     com a especificação da linguagem e com o enunciado do trabalho.
 */
-WS : (' ' |'\t' | '\r' | '\n') {skip(); };
+WS : (' ' |'\t' | '\r' ) {skip(); };
