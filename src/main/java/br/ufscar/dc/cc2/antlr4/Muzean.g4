@@ -8,22 +8,26 @@ programa : cabecalho '\n\n' compassos;
 /*
 2. <cabecalho> ::= <definicoes> \n\n <flags>+
 */
-cabecalho : definicoes '\n\n' flags+;
+cabecalho : definicoes? flags;
 
 /*
 3. <definicoes> ::= # ALIAS : <compassos>
 */
-definicoes : '#' ALIAS ':' compassos;
+definicoes : definicao+;
+
+definicao : '#' ALIAS ':' compassos '\n';
 
 /*
 4. <flags> ::= ‘tom’ : NOTA  \n  ‘escala’ : ESCALA  \n ‘compasso’ : NUMERO \n <flag>
 */
-flags : 'tom :' NOTA '\n' 'escala :' ESCALA '\n' 'compasso :' NUMERO '\n' flag;
+flags : flag flag_op*; 
+
+flag : 'tom : ' NOTA '\n' 'escala : ' ESCALA '\n' 'compasso : ' NUMERO '\n'; 
 
 /*
 5. <flag> ::=   ‘deslocamento’ : NUMERO  \n <flag> | ‘transposicao’ : NOTA \n <flag> | vazio
 */
-flag : 'deslocamento :' NUMERO '\n' flag | 'transposicao :' NOTA '\n' flag | ;
+flag_op : 'deslocamento :' NUMERO '\n' | 'transposicao :' NOTA '\n';
 
 /*
 6. <compassos> ::= <estruturas> \n <compassos>*
@@ -96,3 +100,9 @@ NUMERO : '1'..'9' ('0'..'9')*;
 19. ESCALA: m | M
 */
 ESCALA : 'm' | 'M';
+
+/*
+    Foi criada uma regra do lexer para identificar espaços em branco de acordo
+    com a especificação da linguagem e com o enunciado do trabalho.
+*/
+WS : (' ' |'\t' | '\r' | '\n') {skip(); };
