@@ -32,10 +32,8 @@
                             <goal>antlr4</goal>
                         </goals>
                         <configuration>
-                            <!-->
                             <visitor>true</visitor>
                             <listener>true</listener>
-                            <-->
                             <sourceDirectory>src</sourceDirectory>
                             <arguments>
                                 <argument>-package</argument>

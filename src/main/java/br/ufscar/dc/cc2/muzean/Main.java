@@ -12,11 +12,15 @@ import org.antlr.v4.runtime.CommonTokenStream;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        int test_case = 2;
-       
-        String input_file_path = "casos_de_teste/sintatico/entrada/" + test_case + ".mzn";
-        String output_file_path = "casos_de_teste/sintatico/saida_gerada/" + test_case + ".mzn";
-                
+        String input_file_path_mask = "casos_de_teste/sintatico/entrada/%1$d.mzn";
+        String output_file_path_mask = "casos_de_teste/sintatico/saida_gerada/%1$d.mzn";
+
+        int test_case = 1;
+
+        compile(String.format(input_file_path_mask, test_case), String.format(output_file_path_mask, test_case));
+    }
+
+    static void compile(String input_file_path, String output_file_path) throws IOException {
         FileReader input_test_case = new FileReader(input_file_path);
         ANTLRInputStream input = new ANTLRInputStream(input_test_case);
         input_test_case.close();
@@ -25,16 +29,26 @@ public class Main {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MuzeanParser parser = new MuzeanParser(tokens);
 
+        lexer.removeErrorListeners();
+        parser.removeErrorListeners();
+
         MeuErrorListener mel = new MeuErrorListener();
-
-        //lexer.removeErrorListeners();
-        //parser.removeErrorListeners();
-
-        //parser.addErrorListener(mel);
+        parser.addErrorListener(mel);
 
         ProgramaContext programa_context = parser.programa();
 
-        System.out.println(Saida.getTexto());
+        if (!Saida.is_modified()) {
+            // sem erro léxico/sintático
+            //AnalisadorSemantico as = new AnalisadorSemantico();
+            //as.visitPrograma(aas);
+        }
+
+        if (!Saida.is_modified()) {
+            // sem erro semântico
+            Gerador g = new Gerador();
+            String out = (String) g.visitPrograma(programa_context);
+            Saida.print(out);
+        }
 
         PrintWriter outputTestCase = new PrintWriter(output_file_path, "UTF-8");
         outputTestCase.print(Saida.getTexto());
