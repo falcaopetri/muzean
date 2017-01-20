@@ -10,5 +10,9 @@ package br.ufscar.dc.cc2.muzean;
  * @author Júnior
  */
 public class Som {
-    String nota;
+    private String nota;
+    
+    public Som(String nota){
+        this.nota = nota;
+    }
 }

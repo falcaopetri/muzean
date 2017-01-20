@@ -15,7 +15,14 @@ import java.util.List;
 public class Compasso extends Estrutura{
     private List<Som> sons =  new ArrayList<>();
     
-    public void addLista(Som s){
+    public Compasso(){
+    }
+    
+    public void add(Som s){
         sons.add(s);
+    }
+    
+    public void addAll(List<Som> sons){
+        this.sons = sons;
     }
 }

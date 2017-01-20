@@ -16,8 +16,16 @@ public class Loop extends Estrutura{
     private int numeroRep;
     private List<Estrutura> estrutura =  new ArrayList<>();
     
-    public void addLista(Estrutura s){
+    public Loop(int numeroRep){
+        this.numeroRep = numeroRep;
+    }
+    
+    public void add(Estrutura s){
         estrutura.add(s);
+    }
+    
+    public void addAll(List<Estrutura> estrutura){
+        this.estrutura = estrutura;
     }
     
 }
