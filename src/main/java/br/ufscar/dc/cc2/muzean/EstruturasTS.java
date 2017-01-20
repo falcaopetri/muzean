@@ -20,6 +20,9 @@ public class EstruturasTS extends EntradaTS{
         super(nome, Tipo.ESTRUTURAS);
         this.estruturas = estruturas;
     }
-    
+
+    public List<Estrutura> getEstruturas() {
+        return estruturas;
+    }
     
 }

@@ -1,6 +1,7 @@
 package br.ufscar.dc.cc2.muzean;
 
 import java.util.Scanner;
+import java.util.stream.Collectors;
 import main.antlr4.MuzeanBaseVisitor;
 import main.antlr4.MuzeanParser;
 
@@ -17,11 +18,10 @@ public class Gerador extends MuzeanBaseVisitor<Object> {
         String footer = getResourceAsString("/footer.txt");
 
         String cabecalho = (String) visitCabecalho(ctx.cabecalho());
-        String compassos = "";
 
-        for (Estrutura est : TabelaDeSimbolos.getEstruturas()) {
-            compassos += est.toString();
-        }
+        String compassos = "compasses = [\n";
+        compassos += TabelaDeSimbolos.getEstruturas().stream().map(i -> i.toString()).collect(Collectors.joining(", \n"));
+        compassos += "\n]\n";
 
         return header + cabecalho + compassos + footer;
     }
@@ -31,11 +31,14 @@ public class Gerador extends MuzeanBaseVisitor<Object> {
         // cabecalho : flags '\n' definicoes=definicao*;
         String out = (String) visitFlags(ctx.flags());
 
-        for (MuzeanParser.DefinicaoContext def : ctx.definicao()) {
-            out += (String) visitDefinicao(def);
-        }
+        out = ctx.definicao().stream().map(def -> (String) visitDefinicao(def)).reduce(out, String::concat);
 
         return out;
+    }
+
+    @Override
+    public Object visitFlags(MuzeanParser.FlagsContext ctx) {
+        return "";
     }
 
     @Override

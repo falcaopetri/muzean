@@ -13,7 +13,7 @@ public class TabelaDeSimbolos {
         Tabela de Símbolos reaproveitada de Construção de Compiladores 1.
         Modificada conforme o necessário.
      */
-    static private List<EntradaTS> simbolos =  new ArrayList<>();
+    static private List<EntradaTS> simbolos = new ArrayList<>();
 
     static public void adicionarSimbolo(String nome, Tipo tipo) {
         simbolos.add(new EntradaTS(nome, tipo));
@@ -43,6 +43,7 @@ public class TabelaDeSimbolos {
     }
 
     static public EntradaTS getSimbolo(String nome) {
+        // TODO remove (?!)
         // Formato esperado de nome: IDENT ('.' IDENT)*
 
         String nomes[] = nome.split("\\.", 2);
@@ -57,14 +58,21 @@ public class TabelaDeSimbolos {
                 // Encontramos nossa entrada
                 return etds;
             }
-            
+
         }
 
         return null;
     }
 
-    static Iterable<Estrutura> getEstruturas() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    static List<Estrutura> getEstruturas() {
+        for (EntradaTS etds : simbolos) {
+            if (etds.getTipo() == Tipo.ESTRUTURAS) {
+                EstruturasTS estruturas = (EstruturasTS) etds;
+                return estruturas.getEstruturas();
+            }
+        }
+
+        throw new RuntimeException("Lista de estruturas não encontrada");
     }
 
     @Override

@@ -1,3 +1,5 @@
+
+
 def write_notes(notes, durations):
     global time
     for i in range(len(notes)):
