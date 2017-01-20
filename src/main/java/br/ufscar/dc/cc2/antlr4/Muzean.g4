@@ -3,7 +3,7 @@ grammar Muzean;
 /*
 1. <programa> ::= <cabecalho> \n\n <compassos>
 */
-programa : cabecalho compassos;
+programa : cabecalho estruturas;
 
 /*
 2. <cabecalho> ::= <definicoes> \n\n <flags>+
@@ -15,7 +15,7 @@ cabecalho : flags '\n' definicao* ;
 */
 //definicoes : definicao+;
 
-definicao : '#' ALIAS ':' compassos '\n';
+definicao : '#' ALIAS ':' estruturas '\n';
 
 /*
 4. <flags> ::= ‘tom’ : NOTA  \n  ‘escala’ : ESCALA  \n ‘compasso’ : NUMERO \n <flag>
@@ -32,17 +32,17 @@ flag_op : 'deslocamento :' NUMERO '\n' | 'transposicao :' NOTA '\n';
 /*
 6. <compassos> ::= <estruturas> \n <compassos>*
 */
-compassos : (estruturas '\n')+;
+estruturas : (estrutura '\n')+;
 
 /*
 7. <estruturas> ::= <loop> | <compasso> | ALIAS
 */
-estruturas : loop | compasso | ALIAS;
+estrutura : loop | compasso | ALIAS;
 
 /*
 8. <loop> ::= NUMERO { <compassos> }
 */
-loop : NUMERO '{' compassos '}';  // colocar \n antes de compassos?
+loop : NUMERO '{' estruturas '}';  // colocar \n antes de compassos?
 
 /*
 9. <compasso> :: = [ <sons> ]

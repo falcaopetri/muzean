@@ -22,8 +22,7 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         TabelaDeSimbolos.adicionarSimbolo(ctx.NOTA().getText(), Tipo.TRANSPOSICAO);
         return super.visitFlag_op(ctx); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+   
     
     
     @Override

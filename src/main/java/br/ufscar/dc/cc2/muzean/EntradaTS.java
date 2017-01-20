@@ -19,6 +19,9 @@ public class EntradaTS {
         this.nome = nome;
         this.tipo = tipo;
     }
+    
+    public EntradaTS(){
+    }
 
     public String getNome() {
         return nome;
