@@ -16,7 +16,10 @@ public class EstruturasTS extends EntradaTS{
     
     private List<Estrutura> estruturas =  new ArrayList<>();
 
-    
+    public EstruturasTS(String nome, List<Estrutura> estruturas){
+        super(nome, Tipo.ESTRUTURAS);
+        this.estruturas = estruturas;
+    }
     
     
 }
