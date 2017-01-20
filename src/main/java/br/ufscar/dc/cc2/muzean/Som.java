@@ -38,28 +38,47 @@ public class Som {
 
     @Override
     public String toString() {
-        /*
-        G5 = 79
-        F5 = 77
-        d5 = 75 # D#5
-        C5 = 72
-        a4 = 70 # A#4
-        */
-        if ("G5".equals(nota)) {
-            return "79";
+        return getNoteNumber();
+    }
+
+    private String getNoteNumber() {
+        // TODO comportamento confuso do *
+
+        String out = "";
+        if (nota.length() == 2) {
+            // LETTER OCTAVE
+            int number = getNoteBaseNumber(nota.charAt(0)) + 12 * Integer.parseInt(Character.toString(nota.charAt(1))) + 12;
+            return Integer.toString(number);
+        } else if (nota.length() == 3) {
+            int number = getNoteBaseNumber(nota.charAt(0)) + 12 * Integer.parseInt(Character.toString(nota.charAt(2))) + 12;
+            number += 1;
+            return Integer.toString(number);
+        } else if (nota.equals("*")) {
+            return "*";
+        } else {
+            throw new AssertionError("nota inválida: " + nota);
         }
-        else if ("F5".equals(nota)) {
-            return "77";
+    }
+
+    private int getNoteBaseNumber(char c) {
+        // TODO fazer um map melhor
+        switch (c) {
+            case 'C':
+                return 0;
+            case 'D':
+                return 2;
+            case 'E':
+                return 4;
+            case 'F':
+                return 5;
+            case 'G':
+                return 7;
+            case 'A':
+                return 9;
+            case 'B':
+                return 11;
+            default:
+                throw new AssertionError("nota inválida");
         }
-        else if ("D#5".equals(nota)) {
-            return "75";
-        }
-        else if ("C5".equals(nota)) {
-            return "72";
-        }
-        else if ("A#4".equals(nota)) {
-            return "70";
-        }
-        return nota;
     }
 }
