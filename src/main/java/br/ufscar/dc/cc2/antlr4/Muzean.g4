@@ -1,14 +1,14 @@
 grammar Muzean;
 
 /*
-1. <programa> ::= <cabecalho> \n\n <compassos>
+    <programa> ::= <cabecalho> <estruturas>
 */
 programa : cabecalho estruturas;
 
 /*
 2. <cabecalho> ::= <definicoes> \n\n <flags>+
 */
-cabecalho : flags '\n' definicao* ;
+cabecalho : flags '\n' definicoes=definicao* ;
 
 /*
 3. <definicoes> ::= # ALIAS : <compassos>
@@ -29,9 +29,6 @@ flag : 'tom' ':' NOTA '\n' 'escala' ':' ESCALA '\n' 'compasso' ':' NUMERO '\n';
 */
 flag_op : 'deslocamento :' NUMERO '\n' | 'transposicao :' NOTA '\n';
 
-/*
-6. <compassos> ::= <estruturas> \n <compassos>*
-*/
 estruturas : (estrutura '\n')+;
 
 /*

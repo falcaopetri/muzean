@@ -1,0 +1,13 @@
+def write_notes(notes, durations):
+    global time
+    for i in range(len(notes)):
+        dur = durations[i] * duration_scale
+        midi.addNote(track, channel, notes[i], time, dur, volume)
+        time += dur
+
+for compass in compasses:
+    write_notes(compass[0], compass[1])
+
+binfile = open("output.mid", 'wb')
+midi.writeFile(binfile)
+binfile.close()

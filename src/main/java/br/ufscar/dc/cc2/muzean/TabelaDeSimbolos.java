@@ -57,10 +57,14 @@ public class TabelaDeSimbolos {
                 // Encontramos nossa entrada
                 return etds;
             }
-
+            
         }
 
         return null;
+    }
+
+    static Iterable<Estrutura> getEstruturas() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
