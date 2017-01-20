@@ -15,7 +15,7 @@ public class Main {
         String input_file_path_mask = "casos_de_teste/sintatico/entrada/%1$d.mzn";
         String output_file_path_mask = "casos_de_teste/sintatico/saida_gerada/%1$d.mzn";
 
-        int test_case = 1;
+        int test_case = 3;
 
         compile(String.format(input_file_path_mask, test_case), String.format(output_file_path_mask, test_case));
     }
@@ -39,8 +39,8 @@ public class Main {
 
         if (!Saida.is_modified()) {
             // sem erro léxico/sintático
-            //AnalisadorSemantico as = new AnalisadorSemantico();
-            //as.visitPrograma(aas);
+            AnalisadorSemantico as = new AnalisadorSemantico();
+            as.visitPrograma(programa_context);
         }
 
         if (!Saida.is_modified()) {
@@ -50,6 +50,8 @@ public class Main {
             Saida.print(out);
         }
 
+        System.out.println(Saida.getTexto());
+        
         PrintWriter outputTestCase = new PrintWriter(output_file_path, "UTF-8");
         outputTestCase.print(Saida.getTexto());
         outputTestCase.close();

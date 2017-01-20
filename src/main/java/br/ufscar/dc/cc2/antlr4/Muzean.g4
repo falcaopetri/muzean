@@ -3,12 +3,12 @@ grammar Muzean;
 /*
 1. <programa> ::= <cabecalho> \n\n <compassos>
 */
-programa : cabecalho '\n' compassos;
+programa : cabecalho compassos;
 
 /*
 2. <cabecalho> ::= <definicoes> \n\n <flags>+
 */
-cabecalho : definicao* flags;
+cabecalho : flags '\n' definicao* ;
 
 /*
 3. <definicoes> ::= # ALIAS : <compassos>
@@ -52,7 +52,7 @@ compasso : '[' sons ']';
 /*
 10. <sons> ::= <som> (, <som>)*
 */
-sons : som (', ' som)*;
+sons : a=som (', ' b+=som)*;
 
 /*
 11. <som> ::= <nota> | <acorde> | - | *
