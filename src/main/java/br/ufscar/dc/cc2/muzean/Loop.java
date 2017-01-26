@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufscar.dc.cc2.muzean;
 
 import java.util.ArrayList;
@@ -12,7 +7,7 @@ import java.util.List;
  *
  * @author Júnior
  */
-public class Loop extends Estrutura{
+public class Loop implements Estrutura {
     private int numeroRep;
     private List<Estrutura> estrutura =  new ArrayList<>();
     
@@ -26,6 +21,11 @@ public class Loop extends Estrutura{
     
     public void addAll(List<Estrutura> estrutura){
         this.estrutura = estrutura;
+    }
+
+    @Override
+    public String generateCode() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

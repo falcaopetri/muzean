@@ -1,19 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufscar.dc.cc2.muzean;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- *
- * @author Júnior
- */
-public class Compasso extends Estrutura {
+public class Compasso implements Estrutura {
 
     private List<Som> sons = new ArrayList<>();
 
@@ -26,21 +17,6 @@ public class Compasso extends Estrutura {
 
     public void addAll(List<Som> sons) {
         this.sons = sons;
-    }
-
-    @Override
-    public String toString() {
-        List<Som> compressed_sounds = compressSons();
-
-        String out = "[";
-        out += " [";
-        out += compressed_sounds.stream().map(i -> i.toString()).collect(Collectors.joining(", "));
-        out += "], [";
-        out += compressed_sounds.stream().map(i -> i.getDuration().toString()).collect(Collectors.joining(", "));
-        out += "] ";
-
-        out += "]";
-        return out;
     }
 
     private List<Som> compressSons() {
@@ -59,6 +35,21 @@ public class Compasso extends Estrutura {
         }
 
         return sons;
+    }
+
+    @Override
+    public String generateCode() {
+        List<Som> compressed_sounds = compressSons();
+
+        String out = "[";
+        out += " [";
+        out += compressed_sounds.stream().map(i -> i.toString()).collect(Collectors.joining(", "));
+        out += "], [";
+        out += compressed_sounds.stream().map(i -> i.getDuration().toString()).collect(Collectors.joining(", "));
+        out += "] ";
+
+        out += "]";
+        return out;
     }
 
 }

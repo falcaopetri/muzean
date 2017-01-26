@@ -8,7 +8,7 @@ programa : cabecalho estruturas;
 /*
 2. <cabecalho> ::= <definicoes> \n\n <flags>+
 */
-cabecalho : flags '\n' definicoes=definicao* ;
+cabecalho : flags '\n' definicao* ;
 
 /*
 3. <definicoes> ::= # ALIAS : <compassos>

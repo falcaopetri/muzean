@@ -20,7 +20,7 @@ public class Gerador extends MuzeanBaseVisitor<Object> {
         String cabecalho = (String) visitCabecalho(ctx.cabecalho());
 
         String compassos = "compasses = [\n";
-        compassos += TabelaDeSimbolos.getEstruturas().stream().map(i -> i.toString()).collect(Collectors.joining(", \n"));
+        compassos += TabelaDeSimbolos.getEstruturas().stream().map(i -> i.generateCode()).collect(Collectors.joining(", \n"));
         compassos += "\n]\n";
 
         return header + cabecalho + compassos + footer;
