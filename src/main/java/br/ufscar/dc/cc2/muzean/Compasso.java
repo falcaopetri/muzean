@@ -8,9 +8,6 @@ public class Compasso implements Estrutura {
 
     private List<Som> sons = new ArrayList<>();
 
-    public Compasso() {
-    }
-
     public void add(Som s) {
         sons.add(s);
     }
@@ -24,10 +21,10 @@ public class Compasso implements Estrutura {
         sons.add(new Som(this.sons.get(0)));
 
         for (int i = 1; i < this.sons.size(); ++i) {
-            Som som = this.sons.get(i);
+            Som som = new Som(this.sons.get(i));
             Som last_added_som = sons.get(sons.size() - 1);
 
-            if (som.toString() == "*") {
+            if ("*".equals(som.toString())) {
                 last_added_som.incrementDuration();
             } else {
                 sons.add(som);

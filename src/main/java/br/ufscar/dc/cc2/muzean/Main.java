@@ -13,9 +13,9 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         String input_file_path_mask = "casos_de_teste/sintatico/entrada/%1$d.mzn";
-        String output_file_path_mask = "casos_de_teste/sintatico/saida_gerada/%1$d.mzn";
+        String output_file_path_mask = "casos_de_teste/sintatico/saida_gerada/%1$d.py";
 
-        int test_case = 5;
+        int test_case = 3;
 
         compile(String.format(input_file_path_mask, test_case), String.format(output_file_path_mask, test_case));
     }

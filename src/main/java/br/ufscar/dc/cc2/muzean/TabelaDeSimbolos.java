@@ -63,16 +63,16 @@ public class TabelaDeSimbolos {
 
         return null;
     }
-
-    static List<Estrutura> getEstruturas() {
+    
+    static List<Estrutura> getEstruturas(String name) {
         for (EntradaTS etds : simbolos) {
-            if (etds.getTipo() == Tipo.ESTRUTURAS) {
+            if (etds.getNome().equals(name)) {
                 EstruturasTS estruturas = (EstruturasTS) etds;
                 return estruturas.getEstruturas();
             }
         }
 
-        throw new RuntimeException("Lista de estruturas não encontrada");
+        return null;
     }
 
     @Override

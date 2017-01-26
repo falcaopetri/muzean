@@ -10,9 +10,20 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
     @Override
     public Object visitPrograma(MuzeanParser.ProgramaContext ctx) {
         visitCabecalho(ctx.cabecalho());
-        EstruturasTS estruturas = new EstruturasTS("Estruturas", (List<Estrutura>) visitEstruturas(ctx.estruturas()));
+        EstruturasTS estruturas = new EstruturasTS("global", (List<Estrutura>) visitEstruturas(ctx.estruturas()));
         TabelaDeSimbolos.adicionarEntrada(estruturas);
         return estruturas;
+    }
+
+    @Override
+    public Object visitDefinicao(MuzeanParser.DefinicaoContext ctx) {
+        // definicao : '#' ALIAS ':' estruturas '\n'
+        String name = ctx.ALIAS().getText();
+        List<Estrutura> estruturas = (List<Estrutura>) visitEstruturas(ctx.estruturas());
+
+        TabelaDeSimbolos.adicionarEntrada(new EstruturasTS(name, estruturas));
+
+        return null;
     }
 
     @Override
@@ -20,13 +31,13 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         TabelaDeSimbolos.adicionarSimbolo(ctx.NOTA().getText(), Tipo.TOM);
         TabelaDeSimbolos.adicionarSimbolo(ctx.ESCALA().getText(), Tipo.ESCALA);
         TabelaDeSimbolos.adicionarSimbolo(ctx.NUMERO().getText(), Tipo.COMPASSO);
-        return super.visitFlag(ctx); //To change body of generated methods, choose Tools | Templates.
+        return super.visitFlag(ctx);
     }
 
     @Override
     public Object visitFlag_op(MuzeanParser.Flag_opContext ctx) {
         TabelaDeSimbolos.adicionarSimbolo(ctx.NOTA().getText(), Tipo.TRANSPOSICAO);
-        return super.visitFlag_op(ctx); //To change body of generated methods, choose Tools | Templates.
+        return super.visitFlag_op(ctx);
     }
 
     @Override
@@ -78,8 +89,18 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
             return visitLoop(ctx.loop());
         } else if (ctx.compasso() != null) {
             return visitCompasso(ctx.compasso());
+        } else if (ctx.ALIAS() != null) {
+            List<Estrutura> estruturas = TabelaDeSimbolos.getEstruturas(ctx.ALIAS().getText());
+            Alias alias = null;
+
+            if (estruturas == null) {
+                Saida.println("Alias " + ctx.ALIAS().getText() + " não definido.");
+            } else {
+                alias = new Alias(ctx.ALIAS().getText(), estruturas);
+            }
+            return alias;
         }
-        throw new UnsupportedOperationException("Alias não implementado!");
+        throw new UnsupportedOperationException("unreachable code");
     }
 
     @Override

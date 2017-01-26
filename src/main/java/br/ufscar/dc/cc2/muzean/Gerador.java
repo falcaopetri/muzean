@@ -17,34 +17,11 @@ public class Gerador extends MuzeanBaseVisitor<Object> {
         String header = getResourceAsString("/header.txt");
         String footer = getResourceAsString("/footer.txt");
 
-        String cabecalho = (String) visitCabecalho(ctx.cabecalho());
-
+        //String cabecalho = (String) visitCabecalho(ctx.cabecalho());
         String compassos = "compasses = [\n";
-        compassos += TabelaDeSimbolos.getEstruturas().stream().map(i -> i.generateCode()).collect(Collectors.joining(", \n"));
+        compassos += TabelaDeSimbolos.getEstruturas("global").stream().map(i -> i.generateCode()).collect(Collectors.joining(", \n"));
         compassos += "\n]\n";
 
-        return header + cabecalho + compassos + footer;
-    }
-
-    @Override
-    public Object visitCabecalho(MuzeanParser.CabecalhoContext ctx) {
-        // cabecalho : flags '\n' definicoes=definicao*;
-        String out = (String) visitFlags(ctx.flags());
-
-        out = ctx.definicao().stream().map(def -> (String) visitDefinicao(def)).reduce(out, String::concat);
-
-        return out;
-    }
-
-    @Override
-    public Object visitFlags(MuzeanParser.FlagsContext ctx) {
-        return "";
-    }
-
-    @Override
-    public Object visitDefinicao(MuzeanParser.DefinicaoContext ctx) {
-        // definicao : '#' ALIAS ':' estruturas '\n'
-        String out = ctx.ALIAS().getText() + " = " + /* get ALIAS da TS */ "[]" + "\n";
-        return out;
+        return header + /*cabecalho +*/ compassos + footer;
     }
 }
