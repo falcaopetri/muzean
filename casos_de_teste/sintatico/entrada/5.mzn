@@ -1,12 +1,8 @@
-#FIRSTPART : 	[G5, F5, F5, D#5, D#5, *, C5, A#4]
-[D#5, *, D#5, *, D#5, A#4, C5, A#4]
-[D#5, *, D#5, D#5, D#5, *, *, G5]
-
 tom : F
 escala : m 
-compasso : 8
+compasso : 7
 
-FIRSTPART
-[F5, F5, *, G5, F5, *, *, G5]
-FIRSTPART
-[G5, F5, F5, G5, F5, D#5, *, *]
+5 {
+	[C6, D6, E6, F6, G6, A6, B6]
+	[C7, D7, E7, F7, G7, A7, B7]
+}

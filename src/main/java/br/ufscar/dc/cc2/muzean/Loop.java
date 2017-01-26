@@ -2,30 +2,39 @@ package br.ufscar.dc.cc2.muzean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
  * @author Júnior
  */
 public class Loop implements Estrutura {
+
     private int numeroRep;
-    private List<Estrutura> estrutura =  new ArrayList<>();
-    
-    public Loop(int numeroRep){
+    private List<Estrutura> estrutura = new ArrayList<>();
+
+    public Loop(int numeroRep) {
         this.numeroRep = numeroRep;
     }
-    
-    public void add(Estrutura s){
+
+    public void add(Estrutura s) {
         estrutura.add(s);
     }
-    
-    public void addAll(List<Estrutura> estrutura){
+
+    public void addAll(List<Estrutura> estrutura) {
         this.estrutura = estrutura;
     }
 
     @Override
     public String generateCode() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String out = "";
+
+        for (int i = 0; i < numeroRep; ++i) {
+            out += estrutura.stream().map(x -> x.generateCode()).collect(Collectors.joining(", \n"));
+            out += ",\n";
+        }
+
+        return out;
     }
-    
+
 }

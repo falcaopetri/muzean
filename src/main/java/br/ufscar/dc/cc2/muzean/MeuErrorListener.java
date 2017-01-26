@@ -24,7 +24,7 @@ public class MeuErrorListener implements ANTLRErrorListener {
             text = "EOF";
         }
 
-        Saida.println("Linha " + i + ": erro sintatico proximo a " + text);
+        Saida.println("Linha " + i + ": erro sintatico proximo a '" + text + "'");
 
         // TODO lançando uma ParseCancellationException, poderíamos simplificar o Saida
         // O problema é que simplificando o Saida, afetamos os erros reports que estão na gramática

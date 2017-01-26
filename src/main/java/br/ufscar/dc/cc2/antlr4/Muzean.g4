@@ -39,7 +39,7 @@ estrutura : loop | compasso | ALIAS;
 /*
 8. <loop> ::= NUMERO { <compassos> }
 */
-loop : NUMERO '{' estruturas '}';  // colocar \n antes de compassos?
+loop : NUMERO '{' '\n' estruturas '}';  // colocar \n antes de compassos?
 
 /*
 9. <compasso> :: = [ <sons> ]

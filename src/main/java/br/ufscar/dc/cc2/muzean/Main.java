@@ -15,7 +15,7 @@ public class Main {
         String input_file_path_mask = "casos_de_teste/sintatico/entrada/%1$d.mzn";
         String output_file_path_mask = "casos_de_teste/sintatico/saida_gerada/%1$d.mzn";
 
-        int test_case = 4;
+        int test_case = 5;
 
         compile(String.format(input_file_path_mask, test_case), String.format(output_file_path_mask, test_case));
     }
