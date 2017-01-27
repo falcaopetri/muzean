@@ -1,7 +1,6 @@
 package br.ufscar.dc.cc2.muzean;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import main.antlr4.MuzeanBaseVisitor;
 import main.antlr4.MuzeanParser;
