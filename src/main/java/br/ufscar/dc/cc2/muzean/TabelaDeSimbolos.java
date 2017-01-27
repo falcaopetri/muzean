@@ -33,6 +33,15 @@ public class TabelaDeSimbolos {
         return getSimbolo(nome) != null;
     }
 
+    static public int getTransposicao() {
+        for (EntradaTS etds : simbolos) {
+            if (etds.getTipo() == Tipo.TRANSPOSICAO) {
+                return Integer.parseInt(etds.getNome());
+            }
+        }
+        return 0;
+    }
+
     static public int getCompassos() {
         for (EntradaTS etds : simbolos) {
             if (etds.getTipo() == Tipo.COMPASSO) {

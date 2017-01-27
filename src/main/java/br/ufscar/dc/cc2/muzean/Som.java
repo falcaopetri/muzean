@@ -43,16 +43,16 @@ public class Som {
 
     private String getNoteNumber() {
         // TODO comportamento confuso do *
-
+        int transposicao = TabelaDeSimbolos.getTransposicao();
         String out = "";
         if (nota.length() == 2) {
             // LETTER OCTAVE
             int number = getNoteBaseNumber(nota.charAt(0)) + 12 * Integer.parseInt(Character.toString(nota.charAt(1))) + 12;
-            return Integer.toString(number);
+            return Integer.toString(number + transposicao);
         } else if (nota.length() == 3) {
             int number = getNoteBaseNumber(nota.charAt(0)) + 12 * Integer.parseInt(Character.toString(nota.charAt(2))) + 12;
             number += 1;
-            return Integer.toString(number);
+            return Integer.toString(number + transposicao);
         } else if (nota.equals("*")) {
             return "*";
         } else {

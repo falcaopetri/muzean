@@ -36,7 +36,7 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
 
     @Override
     public Object visitFlag_op(MuzeanParser.Flag_opContext ctx) {
-        TabelaDeSimbolos.adicionarSimbolo(ctx.NOTA().getText(), Tipo.TRANSPOSICAO);
+        TabelaDeSimbolos.adicionarSimbolo(ctx.SIGNED_NUMERO().getText(), Tipo.TRANSPOSICAO);
         return super.visitFlag_op(ctx);
     }
 

@@ -25,9 +25,9 @@ flags : flag flag_op*;
 flag : 'tom' ':' NOTA '\n' 'escala' ':' ESCALA '\n' 'compasso' ':' NUMERO '\n'; 
 
 /*
-5. <flag> ::=   ‘deslocamento’ : NUMERO  \n <flag> | ‘transposicao’ : NOTA \n <flag> | vazio
+5. <flag> ::= ‘transposicao’ : SIGNED_NUMERO \n <flag>
 */
-flag_op : 'deslocamento :' NUMERO '\n' | 'transposicao :' NOTA '\n';
+flag_op : 'transposicao' ':' SIGNED_NUMERO '\n';
 
 estruturas : (estrutura '\n')+;
 
@@ -93,6 +93,8 @@ COMMENT :	'--' ~('\n' | '\r')* '\r'? '\n' {skip();};
 18. NUMERO: [1-9][0-9]*
 */
 NUMERO : '1'..'9' ('0'..'9')*;
+
+SIGNED_NUMERO : ('-' | '+') NUMERO;
 
 /*
 19. ESCALA: m | M
