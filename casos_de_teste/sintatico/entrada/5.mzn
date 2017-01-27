@@ -1,5 +1,5 @@
-tom : F
-escala : m 
+tom : C
+escala : M 
 compasso : 7
 
 5 {

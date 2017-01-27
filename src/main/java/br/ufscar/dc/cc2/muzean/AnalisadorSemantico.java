@@ -31,8 +31,11 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
 
     @Override
     public Object visitFlag(MuzeanParser.FlagContext ctx) {
-        TabelaDeSimbolos.adicionarSimbolo(ctx.NOTA().getText(), Tipo.TOM);
-        TabelaDeSimbolos.adicionarSimbolo(ctx.ESCALA().getText(), Tipo.ESCALA);
+        String nota = ctx.NOTA().getText();
+        String escala = ctx.ESCALA().getText();
+        Escala.setEscala(nota, escala);
+        TabelaDeSimbolos.adicionarSimbolo(nota, Tipo.TOM);
+        TabelaDeSimbolos.adicionarSimbolo(escala, Tipo.ESCALA);
         TabelaDeSimbolos.adicionarSimbolo(ctx.NUMERO().getText(), Tipo.COMPASSO);
         return super.visitFlag(ctx);
     }
@@ -74,6 +77,10 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
                             + TabelaDeSimbolos.getTransposicao() + " está fora do range MIDI [0, 127].");
                 }
             } finally {
+            }
+            String nota = ctx.nota().NOTA().getText();
+            if (!Escala.verifyScale(nota)) {
+                Saida.println("Linha " + ctx.nota().getStart().getLine() + ": A nota " + nota + " não faz parte da escala declarada");
             }
         } else if (ctx.getStart().getText().equals("*")) {
             s = new Som("*");
