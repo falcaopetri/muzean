@@ -20,9 +20,13 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         // definicao : '#' ALIAS ':' estruturas '\n'
         String name = ctx.ALIAS().getText();
         List<Estrutura> estruturas = (List<Estrutura>) visitEstruturas(ctx.estruturas());
-
-        TabelaDeSimbolos.adicionarEntrada(new EstruturasTS(name, estruturas));
-
+        
+        if(TabelaDeSimbolos.existeSimbolo(name)){
+            Saida.println("O Alias " + name + " já foi declarado!", true);
+        }
+        else{
+            TabelaDeSimbolos.adicionarEntrada(new EstruturasTS(name, estruturas));
+        }
         return null;
     }
 
@@ -45,7 +49,10 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         Compasso compasso = new Compasso();
         int count = 1 + ctx.b.size();
         if (count != TabelaDeSimbolos.getCompassos()) {
-            Saida.println("O compasso não tem o número de notas especificadas no cabeçalho", true);
+            Saida.println("Linha " + ctx.a.getStart().getLine() + ": O compasso não tem o número de notas especificadas no cabeçalho", true);
+        }
+        if (ctx.a.getText().equals("*")){
+            Saida.println("Linha " + ctx.a.getStart().getLine() + ": O compasso não pode ser iniciado com *", true);
         }
         compasso.add((Som) visitSom(ctx.a));
         for (MuzeanParser.SomContext x : ctx.b) {
