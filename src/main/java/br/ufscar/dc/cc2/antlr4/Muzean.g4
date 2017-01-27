@@ -52,19 +52,14 @@ compasso : '[' sons ']';
 sons : a=som (', ' b+=som)*;
 
 /*
-11. <som> ::= <nota> | <acorde> | - | *
+11. <som> ::= <nota> | - | *
 */
-som : nota | acorde | '-' | '*';
+som : nota | '-' | '*';
 
 /*
 12. <nota> ::= NOTA OCTAVE
 */
 nota : NOTA NUMERO;
-
-/*
-13. <acorde> ::= ( <nota> )
-*/
-acorde : '(' nota ')';
 
 /*REGEX*/
 

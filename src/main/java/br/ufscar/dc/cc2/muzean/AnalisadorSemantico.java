@@ -10,20 +10,20 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
     @Override
     public Object visitPrograma(MuzeanParser.ProgramaContext ctx) {
         visitCabecalho(ctx.cabecalho());
-        EstruturasTS estruturas = new EstruturasTS("global", (List<Estrutura>) visitEstruturas(ctx.estruturas()));
+        EstruturasTS estruturas = new EstruturasTS("__global__", (List<Estrutura>) visitEstruturas(ctx.estruturas()));
         TabelaDeSimbolos.adicionarEntrada(estruturas);
-        return estruturas;
+        return null;
     }
 
     @Override
     public Object visitDefinicao(MuzeanParser.DefinicaoContext ctx) {
         // definicao : '#' ALIAS ':' estruturas '\n'
         String name = ctx.ALIAS().getText();
-        List<Estrutura> estruturas = (List<Estrutura>) visitEstruturas(ctx.estruturas());
 
         if (TabelaDeSimbolos.existeSimbolo(name)) {
             Saida.println("O Alias " + name + " já foi declarado!", true);
         } else {
+            List<Estrutura> estruturas = (List<Estrutura>) visitEstruturas(ctx.estruturas());
             TabelaDeSimbolos.adicionarEntrada(new EstruturasTS(name, estruturas));
         }
         return null;
@@ -64,7 +64,7 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
     public Object visitSom(MuzeanParser.SomContext ctx) {
         Som s = null;
         if (ctx.nota() != null) {
-            s = new Som(ctx.nota().NOTA().getText() + ctx.nota().NUMERO().getText());
+            s = new Som(ctx.nota().getText());
 
             try {
                 int number = Integer.parseInt(s.toString()) + TabelaDeSimbolos.getTransposicao();
@@ -121,8 +121,7 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
     }
 
     @Override
-    public Object visitEstruturas(MuzeanParser.EstruturasContext ctx
-    ) {
+    public Object visitEstruturas(MuzeanParser.EstruturasContext ctx) {
         List<Estrutura> estruturas = new ArrayList<>();
 
         for (MuzeanParser.EstruturaContext x : ctx.estrutura()) {

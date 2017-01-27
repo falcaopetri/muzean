@@ -22,19 +22,21 @@ public class Loop implements Estrutura {
     }
 
     public void addAll(List<Estrutura> estrutura) {
-        this.estrutura = estrutura;
+        this.estrutura.addAll(estrutura);
     }
 
     @Override
     public String generateCode() {
         String out = "";
+        String body = estrutura.stream().map(x -> x.generateCode()).collect(Collectors.joining(", \n"));
 
         for (int i = 0; i < numeroRep; ++i) {
-            out += estrutura.stream().map(x -> x.generateCode()).collect(Collectors.joining(", \n"));
-            out += ",\n";
+            out += body;
+            if (i < numeroRep - 1) {
+                out += ",\n";
+            }
         }
 
         return out;
     }
-
 }

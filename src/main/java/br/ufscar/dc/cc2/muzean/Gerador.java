@@ -17,11 +17,10 @@ public class Gerador extends MuzeanBaseVisitor<Object> {
         String header = getResourceAsString("/header.txt");
         String footer = getResourceAsString("/footer.txt");
 
-        //String cabecalho = (String) visitCabecalho(ctx.cabecalho());
         String compassos = "compasses = [\n";
-        compassos += TabelaDeSimbolos.getEstruturas("global").stream().map(i -> i.generateCode()).collect(Collectors.joining(", \n"));
+        compassos += TabelaDeSimbolos.getEstruturas("__global__").stream().map(i -> i.generateCode()).collect(Collectors.joining(",\n"));
         compassos += "\n]\n";
 
-        return header + /*cabecalho +*/ compassos + footer;
+        return header + compassos + footer;
     }
 }
