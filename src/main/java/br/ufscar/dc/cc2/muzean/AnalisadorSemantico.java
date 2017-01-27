@@ -1,6 +1,7 @@
 package br.ufscar.dc.cc2.muzean;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import main.antlr4.MuzeanBaseVisitor;
 import main.antlr4.MuzeanParser;
@@ -20,11 +21,10 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         // definicao : '#' ALIAS ':' estruturas '\n'
         String name = ctx.ALIAS().getText();
         List<Estrutura> estruturas = (List<Estrutura>) visitEstruturas(ctx.estruturas());
-        
-        if(TabelaDeSimbolos.existeSimbolo(name)){
+
+        if (TabelaDeSimbolos.existeSimbolo(name)) {
             Saida.println("O Alias " + name + " já foi declarado!", true);
-        }
-        else{
+        } else {
             TabelaDeSimbolos.adicionarEntrada(new EstruturasTS(name, estruturas));
         }
         return null;
@@ -51,7 +51,7 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         if (count != TabelaDeSimbolos.getCompassos()) {
             Saida.println("Linha " + ctx.a.getStart().getLine() + ": O compasso não tem o número de notas especificadas no cabeçalho", true);
         }
-        if (ctx.a.getText().equals("*")){
+        if (ctx.a.getText().equals("*")) {
             Saida.println("Linha " + ctx.a.getStart().getLine() + ": O compasso não pode ser iniciado com *", true);
         }
         compasso.add((Som) visitSom(ctx.a));
@@ -66,8 +66,16 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         Som s = null;
         if (ctx.nota() != null) {
             s = new Som(ctx.nota().NOTA().getText() + ctx.nota().NUMERO().getText());
-        } else if (ctx.acorde() != null) {
-            s = new Som(ctx.acorde().nota().NOTA().getText() + ctx.acorde().nota().NUMERO().getText());
+
+            try {
+                int number = Integer.parseInt(s.toString()) + TabelaDeSimbolos.getTransposicao();
+                if (number < 0 || number > 127) {
+                    Saida.println("Nota " + s.getNota() + " transposta em "
+                            + (TabelaDeSimbolos.getTransposicao() > 0 ? "+" : "")
+                            + TabelaDeSimbolos.getTransposicao() + " está fora do range MIDI [0, 127].");
+                }
+            } finally {
+            }
         } else if (ctx.getStart().getText().equals("*")) {
             s = new Som("*");
         } else if (ctx.getStart().getText().equals("-")) {
@@ -77,7 +85,8 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
     }
 
     @Override
-    public Object visitLoop(MuzeanParser.LoopContext ctx) {
+    public Object visitLoop(MuzeanParser.LoopContext ctx
+    ) {
         Loop loop = new Loop(Integer.parseInt(ctx.NUMERO().getText()));
         loop.addAll((List<Estrutura>) visitEstruturas(ctx.estruturas()));
 
@@ -85,13 +94,15 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
     }
 
     @Override
-    public Object visitCompasso(MuzeanParser.CompassoContext ctx) {
+    public Object visitCompasso(MuzeanParser.CompassoContext ctx
+    ) {
         Compasso compasso = (Compasso) visitSons(ctx.sons());
         return compasso;
     }
 
     @Override
-    public Object visitEstrutura(MuzeanParser.EstruturaContext ctx) {
+    public Object visitEstrutura(MuzeanParser.EstruturaContext ctx
+    ) {
         if (ctx.loop() != null) {
             return visitLoop(ctx.loop());
         } else if (ctx.compasso() != null) {
@@ -111,7 +122,8 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
     }
 
     @Override
-    public Object visitEstruturas(MuzeanParser.EstruturasContext ctx) {
+    public Object visitEstruturas(MuzeanParser.EstruturasContext ctx
+    ) {
         List<Estrutura> estruturas = new ArrayList<>();
 
         for (MuzeanParser.EstruturaContext x : ctx.estrutura()) {

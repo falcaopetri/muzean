@@ -55,6 +55,8 @@ public class Som {
             return Integer.toString(number + transposicao);
         } else if (nota.equals("*")) {
             return "*";
+        } else if (nota.equals("-")) {
+            return "'-'";
         } else {
             throw new AssertionError("nota inválida: " + nota);
         }

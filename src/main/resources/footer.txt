@@ -4,7 +4,8 @@ def write_notes(notes, durations):
     global time
     for i in range(len(notes)):
         dur = durations[i] * duration_scale
-        midi.addNote(track, channel, notes[i], time, dur, volume)
+        if notes[i] != '-':
+            midi.addNote(track, channel, notes[i], time, dur, volume)
         time += dur
 
 for compass in compasses:
