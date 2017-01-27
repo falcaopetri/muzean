@@ -32,8 +32,11 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
 
     @Override
     public Object visitFlag(MuzeanParser.FlagContext ctx) {
-        TabelaDeSimbolos.adicionarSimbolo(ctx.NOTA().getText(), Tipo.TOM);
-        TabelaDeSimbolos.adicionarSimbolo(ctx.ESCALA().getText(), Tipo.ESCALA);
+        String nota = ctx.NOTA().getText();
+        String escala = ctx.ESCALA().getText();
+        Escala.setEscala(nota, escala);
+        TabelaDeSimbolos.adicionarSimbolo(nota, Tipo.TOM);
+        TabelaDeSimbolos.adicionarSimbolo(escala, Tipo.ESCALA);
         TabelaDeSimbolos.adicionarSimbolo(ctx.NUMERO().getText(), Tipo.COMPASSO);
         return super.visitFlag(ctx);
     }
@@ -66,6 +69,11 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         Som s = null;
         if (ctx.nota() != null) {
             s = new Som(ctx.nota().NOTA().getText() + ctx.nota().NUMERO().getText());
+            String nota = ctx.nota().NOTA().getText();
+            if(!Escala.verifyScale(nota)){
+                Saida.println("Linha " + ctx.nota().getStart().getLine() + ": A nota " + nota + " não faz parte da escala declarada");
+            }            
+            
         } else if (ctx.acorde() != null) {
             s = new Som(ctx.acorde().nota().NOTA().getText() + ctx.acorde().nota().NUMERO().getText());
         } else if (ctx.getStart().getText().equals("*")) {
