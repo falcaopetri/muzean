@@ -18,13 +18,15 @@ public class Main {
         int test_case = 10;
 
         boolean success = generate_intermediate(String.format(input_file_path_mask, test_case), String.format(output_file_path_mask, test_case));
-        compile(String.format(output_file_path_mask, test_case));
-        //execute(String.format(output_file_path_mask, test_case));
+        if (success) {
+            compile(String.format(output_file_path_mask, test_case));
+            // execute(String.format(output_file_path_mask, test_case));
+        }
     }
 
     static void compile(String file) throws IOException {
         Runtime rt = Runtime.getRuntime();
-        Process pr = rt.exec(new String[]{"zsh","-c","cat /home/narek/pk.txt"});
+        Process pr = rt.exec(new String[]{"zsh", "-c", "cat /home/narek/pk.txt"});
     }
 
     static boolean generate_intermediate(String input_file_path, String output_file_path) throws IOException {
@@ -44,28 +46,30 @@ public class Main {
 
         ProgramaContext programa_context = parser.programa();
 
-        boolean success = true;
-        if (!Saida.is_modified()) {
-            // sem erro léxico/sintático
-            AnalisadorSemantico as = new AnalisadorSemantico();
-            as.visitPrograma(programa_context);
+        if (Saida.is_modified()) {
+            System.err.println(Saida.getTexto());
+            return false;
         }
 
-        if (!Saida.is_modified()) {
-            // sem erro semântico
-            Gerador g = new Gerador();
-            String out = (String) g.visitPrograma(programa_context);
-            Saida.print(out);
-        } else {
-            success = false;
+        // sem erro léxico/sintático
+        AnalisadorSemantico as = new AnalisadorSemantico();
+        as.visitPrograma(programa_context);
+
+        if (Saida.is_modified()) {
+            System.err.println(Saida.getTexto());
+            return false;
         }
 
-        System.out.println(Saida.getTexto());
+        // sem erro semântico
+        Gerador g = new Gerador();
+        String out = (String) g.visitPrograma(programa_context);
+        Saida.print(out);
 
+        //System.out.println(Saida.getTexto());
         PrintWriter outputTestCase = new PrintWriter(output_file_path, "UTF-8");
         outputTestCase.print(Saida.getTexto());
         outputTestCase.close();
 
-        return success;
+        return true;
     }
 }
