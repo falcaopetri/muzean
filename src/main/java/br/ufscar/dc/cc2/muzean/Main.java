@@ -15,7 +15,7 @@ public class Main {
         String input_file_path_mask = "casos_de_teste/sintatico/entrada/%1$d.mzn";
         String output_file_path_mask = "casos_de_teste/sintatico/saida_gerada/%1$d.py";
 
-        int test_case = 10;
+        int test_case = 3;
 
         boolean success = generate_intermediate(String.format(input_file_path_mask, test_case), String.format(output_file_path_mask, test_case));
         compile(String.format(output_file_path_mask, test_case));
@@ -53,8 +53,8 @@ public class Main {
 
         if (!Saida.is_modified()) {
             // sem erro semântico
-            Gerador g = new Gerador();
-            g.activateArduino();
+            //Gerador g = new Gerador();
+            GeradorArduino g = new GeradorArduino();
             String out = (String) g.visitPrograma(programa_context);
             Saida.print(out);
         } else {

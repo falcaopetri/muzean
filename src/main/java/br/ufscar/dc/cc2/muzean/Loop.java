@@ -42,31 +42,17 @@ public class Loop implements Estrutura {
     }
 
     @Override
-    public Pair<String, String> generateArduinoCode() {
-        String notes_all = "", durations_all = "";
-        String notes = "", durations = "";
-
-        for (int i = 0; i < estrutura.size(); ++i) {
-            Estrutura e = estrutura.get(i);
-
-            if (i != 0) {
-                notes += ", ";
-                durations += ", ";
-            }
-
-            notes += e.generateArduinoCode().a;
-            durations += e.generateArduinoCode().b;
-        }
+    public String generateArduinoCode() {
+        String out = "";
+        String body = estrutura.stream().map(x -> x.generateArduinoCode()).collect(Collectors.joining(", \n"));
 
         for (int i = 0; i < numeroRep; ++i) {
-            if (i != 0) {
-                notes_all += ", ";
-                durations_all += ", ";
+            out += body;
+            if (i < numeroRep - 1) {
+                out += ",\n";
             }
-
-            notes_all += notes;
-            durations_all += durations;
         }
-        return new Pair<>(notes_all, durations_all);
+
+        return out;
     }
 }

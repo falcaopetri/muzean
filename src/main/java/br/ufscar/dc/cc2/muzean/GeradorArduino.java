@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import main.antlr4.MuzeanBaseVisitor;
 import main.antlr4.MuzeanParser;
 
-public class Gerador extends MuzeanBaseVisitor<Object> {
+public class GeradorArduino extends MuzeanBaseVisitor<Object> {
 
     private static String getResourceAsString(String resource_path) {
         // Source: http://stackoverflow.com/a/18897411
@@ -14,13 +14,17 @@ public class Gerador extends MuzeanBaseVisitor<Object> {
 
     @Override
     public Object visitPrograma(MuzeanParser.ProgramaContext ctx) {
-        String compassos = "compasses = [\n";
+        String header = getResourceAsString("/header_arduino.txt");
+        String footer = getResourceAsString("/footer_arduino.txt");
 
-        String header = getResourceAsString("/header.txt");
-        String footer = getResourceAsString("/footer.txt");
+        String body = TabelaDeSimbolos.getEstruturas("__global__").stream().map(i -> i.generateArduinoCode()).collect(Collectors.joining(",\n"));
+        String compassos = "\nint compassos[] = { "
+                + body
+                + " };";
 
-        compassos += TabelaDeSimbolos.getEstruturas("__global__").stream().map(i -> i.generateCode()).collect(Collectors.joining(",\n"));
-        compassos += "\n]\n";
+        compassos += "\n";
+
+        footer = String.format(footer, body.split(",").length / 2);
 
         return header + compassos + footer;
     }

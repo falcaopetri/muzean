@@ -3,7 +3,6 @@ package br.ufscar.dc.cc2.muzean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.antlr.v4.runtime.misc.Pair;
 
 public class Compasso implements Estrutura {
 
@@ -51,14 +50,13 @@ public class Compasso implements Estrutura {
     }
 
     @Override
-    public Pair<String, String> generateArduinoCode() {
+    public String generateArduinoCode() {
         List<Som> compressed_sounds = compressSons();
-
         Integer size = sons.size();
-        String out1 = compressed_sounds.stream().map(i -> i.toArduinoCode()).collect(Collectors.joining(", "));
-        String out2 = compressed_sounds.stream().map(i -> (new Integer(size / i.getDuration())).toString()).collect(Collectors.joining(", "));
 
-        return new Pair<>(out1, out2);
+        String out = compressed_sounds.stream().map(i -> i.toArduinoCode() + ", " + (size / i.getDuration())).collect(Collectors.joining(", "));
+
+        return out;
     }
 
 }
