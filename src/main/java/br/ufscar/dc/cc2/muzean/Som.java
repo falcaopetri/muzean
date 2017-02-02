@@ -41,6 +41,14 @@ public class Som {
         return getNoteNumber();
     }
 
+    public String toArduinoCode() {
+        if (nota.equals("-")) {
+            return "0";
+        } else {
+            return "NOTE_" + nota.replace("#", "S");
+        }
+    }
+
     private String getNoteNumber() {
         // TODO comportamento confuso do *
         int transposicao = TabelaDeSimbolos.getTransposicao();

@@ -3,6 +3,7 @@ package br.ufscar.dc.cc2.muzean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.antlr.v4.runtime.misc.Pair;
 
 /**
  *
@@ -38,5 +39,34 @@ public class Loop implements Estrutura {
         }
 
         return out;
+    }
+
+    @Override
+    public Pair<String, String> generateArduinoCode() {
+        String notes_all = "", durations_all = "";
+        String notes = "", durations = "";
+
+        for (int i = 0; i < estrutura.size(); ++i) {
+            Estrutura e = estrutura.get(i);
+
+            if (i != 0) {
+                notes += ", ";
+                durations += ", ";
+            }
+
+            notes += e.generateArduinoCode().a;
+            durations += e.generateArduinoCode().b;
+        }
+
+        for (int i = 0; i < numeroRep; ++i) {
+            if (i != 0) {
+                notes_all += ", ";
+                durations_all += ", ";
+            }
+
+            notes_all += notes;
+            durations_all += durations;
+        }
+        return new Pair<>(notes_all, durations_all);
     }
 }

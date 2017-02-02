@@ -24,7 +24,7 @@ public class Main {
 
     static void compile(String file) throws IOException {
         Runtime rt = Runtime.getRuntime();
-        Process pr = rt.exec(new String[]{"zsh","-c","cat /home/narek/pk.txt"});
+        Process pr = rt.exec(new String[]{"zsh", "-c", "cat /home/narek/pk.txt"});
     }
 
     static boolean generate_intermediate(String input_file_path, String output_file_path) throws IOException {
@@ -54,6 +54,7 @@ public class Main {
         if (!Saida.is_modified()) {
             // sem erro semântico
             Gerador g = new Gerador();
+            g.activateArduino();
             String out = (String) g.visitPrograma(programa_context);
             Saida.print(out);
         } else {
