@@ -1,0 +1,8 @@
+tom: C
+escala: M
+compasso: 8
+
+[C4, D4, E4, F4, -, F4, F4, -]
+[C4, D4, C4, D4, -, D4, D4, -]
+[C4, G4, F4, E4, -, E4, E4, -]
+[C4, D4, E4, F4, -, F4, F4, -]

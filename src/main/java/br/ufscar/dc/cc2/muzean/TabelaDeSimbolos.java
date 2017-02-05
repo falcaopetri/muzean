@@ -84,6 +84,10 @@ public class TabelaDeSimbolos {
         return null;
     }
 
+    static void clear() {
+        simbolos.clear();
+    }
+
     @Override
     public String toString() {
         String ret = "";

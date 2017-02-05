@@ -19,12 +19,12 @@ public class Saida {
     }
 
     public static void println(String txt, boolean force) {
-     //   if (force || !is_modified()) {
+        if (force || !is_modified()) {
             // Força uma única linha de erro
             // O parser continua detectando os próximos erros,
             // mas apenas o primeiro output de erro é processado
             texto.append(txt).append("\n");
-       // }
+        }
     }
 
     public static void print(String txt) {
@@ -43,4 +43,3 @@ public class Saida {
         return texto.toString();
     }
 }
-

@@ -51,10 +51,10 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
         Compasso compasso = new Compasso();
         int count = 1 + ctx.b.size();
         if (count != TabelaDeSimbolos.getCompassos()) {
-            Saida.println("Linha " + ctx.a.getStart().getLine() + ": O compasso não tem o número de notas especificadas no cabeçalho", true);
+            Saida.println("Linha " + ctx.a.getStart().getLine() + ": O compasso não tem o número de notas especificadas no cabeçalho");
         }
         if (ctx.a.getText().equals("*")) {
-            Saida.println("Linha " + ctx.a.getStart().getLine() + ": O compasso não pode ser iniciado com *", true);
+            Saida.println("Linha " + ctx.a.getStart().getLine() + ": O compasso não pode ser iniciado com *");
         }
         compasso.add((Som) visitSom(ctx.a));
         for (MuzeanParser.SomContext x : ctx.b) {
@@ -72,7 +72,7 @@ public class AnalisadorSemantico extends MuzeanBaseVisitor {
             try {
                 int number = Integer.parseInt(s.toString()) + TabelaDeSimbolos.getTransposicao();
                 if (number < 0 || number > 127) {
-                    Saida.println("Nota " + s.getNota() + " transposta em "
+                    Saida.println("Nota " + s.getNota() + " (" + s.toString() + ") transposta em "
                             + (TabelaDeSimbolos.getTransposicao() > 0 ? "+" : "")
                             + TabelaDeSimbolos.getTransposicao() + " está fora do range MIDI [0, 127].");
                 }

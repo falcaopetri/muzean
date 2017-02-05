@@ -3,12 +3,11 @@
 
 from midiutil.MidiFile import MIDIFile
 
-midi = MIDIFile(1) # Cria um objeto MIDIFile com 1 track
-
 track = 0   # Tracks são enumeradas a partir do 0
 time = 0    # Tempo é medido em batidas
 channel = 0
-duration_scale = 0.5
+duration_scale = 4.0 / (%d)
 volume = 100
 
-
+midi = MIDIFile(1, adjust_origin=False) # Cria um objeto MIDIFile com 1 track
+midi.addTempo(track, 0, 120)

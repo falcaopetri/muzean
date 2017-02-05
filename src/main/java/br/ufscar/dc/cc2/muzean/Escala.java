@@ -22,24 +22,27 @@ public class Escala {
         if (escala.equals("M")) {
             Integer notas_arr[] = {0, 2, 4, 5, 7, 9, 11};
             notas.addAll(Arrays.asList(notas_arr));
-        }
-        else{
+        } else {
             Integer notas_arr[] = {0, 2, 3, 5, 7, 8, 10};
             notas.addAll(Arrays.asList(notas_arr));
         }
-        
+
         for (Integer i : notas) {
             lista.add((getNoteBaseNumber(nota) + i) % 12);
         }
     }
 
     static public boolean verifyScale(String nota) {
-        for (Integer i : lista){
-            if(getNoteBaseNumber(nota) == i){
+        for (Integer i : lista) {
+            if (getNoteBaseNumber(nota) == i) {
                 return true;
             }
         }
         return false;
+    }
+
+    static void clear() {
+        lista.clear();
     }
 
     static public int getNoteBaseNumber(String c) {
