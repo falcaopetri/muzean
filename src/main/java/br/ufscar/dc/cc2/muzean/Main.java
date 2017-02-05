@@ -14,12 +14,20 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 public class Main {
 
+    /*
+        Quantidade de casos de teste de cada tipo
+     */
     static final int SINTATICO_COUNT = 3;
     static final int SEMANTICO_COUNT = 6;
     static final int GERADOR_COUNT = 6;
 
-    static int force_case = -1;
-    static Teste to_test = Teste.SEMANTICO;
+    /*
+        force_case = -1 => testa todos os casos de teste do tipo especificado por to_test
+        force_case = x => testa caso de teste x
+     */
+    static int force_case = 1;
+    // Opções: SINTATICO, SEMANTICO e GERADOR
+    static Teste to_test = Teste.GERADOR;
 
     public static void main(String[] args) throws IOException {
         int lo = Math.max(force_case, 1);
