@@ -49,4 +49,14 @@ public class Compasso implements Estrutura {
         return out;
     }
 
+    @Override
+    public String generateArduinoCode() {
+        List<Som> compressed_sounds = compressSons();
+        Integer size = sons.size();
+
+        String out = compressed_sounds.stream().map(i -> i.toArduinoCode() + ", " + (size / i.getDuration())).collect(Collectors.joining(", "));
+
+        return out;
+    }
+
 }

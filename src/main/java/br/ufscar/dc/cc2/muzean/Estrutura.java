@@ -7,4 +7,6 @@ package br.ufscar.dc.cc2.muzean;
 interface Estrutura {
 
     String generateCode();
+
+    String generateArduinoCode();
 }

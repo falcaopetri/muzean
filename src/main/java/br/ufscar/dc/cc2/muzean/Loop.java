@@ -39,4 +39,19 @@ public class Loop implements Estrutura {
 
         return out;
     }
+
+    @Override
+    public String generateArduinoCode() {
+        String out = "";
+        String body = estrutura.stream().map(x -> x.generateArduinoCode()).collect(Collectors.joining(", \n"));
+
+        for (int i = 0; i < numeroRep; ++i) {
+            out += body;
+            if (i < numeroRep - 1) {
+                out += ",\n";
+            }
+        }
+
+        return out;
+    }
 }

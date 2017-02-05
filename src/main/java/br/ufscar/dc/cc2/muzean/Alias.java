@@ -26,4 +26,9 @@ public class Alias implements Estrutura {
     public String generateCode() {
         return estruturas.stream().map(i -> i.generateCode()).collect(Collectors.joining(",\n"));
     }
+
+    @Override
+    public String generateArduinoCode() {
+        return estruturas.stream().map(i -> i.generateArduinoCode()).collect(Collectors.joining(",\n"));
+    }
 }

@@ -113,6 +113,8 @@ public class Main {
 
         // sem erro semântico
         Gerador g = new Gerador();
+        //GeradorArduino g = new GeradorArduino();
+
         String out = (String) g.visitPrograma(programa_context);
         Saida.print(out);
 
